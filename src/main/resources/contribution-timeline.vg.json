@@ -1,0 +1,141 @@
+{
+  "$schema": "https://vega.github.io/schema/vega/v5.json",
+  "description": "A timeline visualization of committers contribution timelines",
+  "width": 500,
+  "height": 80,
+  "padding": 5,
+
+  "data": [
+    {
+      "name": "contribution",
+      "format": {"type":"json", "parse":{"from":"date", "to":"date"}},
+      "values": [
+        { "label": "Contributor 1", "from": "2012-10-21", "to": "2012-10-21"},
+        { "label": "Contributor 1", "from": "2013-05-07", "to": "2015-04-16"},
+        { "label": "Contributor 1", "from": "2015-05-29", "to": "2018-06-06"},
+        { "label": "Contributor 1", "from": "2018-07-24", "to": "2018-11-29"},
+        { "label": "Contributor 1", "from": "2019-01-11", "to": "2019-01-11"},
+        { "label": "Contributor 1", "from": "2019-03-11", "to": "2020-01-30"},
+        { "label": "Contributor 1", "from": "2020-03-23", "to": "2021-07-22"},
+        { "label": "Contributor 1", "from": "2021-08-27", "to": "2022-06-22"},
+        { "label": "Contributor 1", "from": "2022-07-26", "to": "2022-11-16"},
+        { "label": "Contributor 2", "from": "2013-04-24", "to": "2015-12-30"},
+        { "label": "Contributor 2", "from": "2016-02-02", "to": "2016-02-29"},
+        { "label": "Contributor 2", "from": "2016-04-04", "to": "2016-07-13"},
+        { "label": "Contributor 2", "from": "2016-09-07", "to": "2016-09-20"},
+        { "label": "Contributor 2", "from": "2016-10-28", "to": "2017-03-16"},
+        { "label": "Contributor 2", "from": "2017-05-02", "to": "2017-05-02"},
+        { "label": "Contributor 2", "from": "2017-06-16", "to": "2017-06-23"},
+        { "label": "Contributor 2", "from": "2018-07-17", "to": "2018-07-17"},
+        { "label": "Contributor 2", "from": "2018-10-02", "to": "2018-11-05"},
+        { "label": "Contributor 2", "from": "2019-07-30", "to": "2019-07-30"},
+        { "label": "Contributor 2", "from": "2019-10-02", "to": "2019-10-02"},
+        { "label": "Contributor 2", "from": "2019-11-15", "to": "2019-11-15"},
+        { "label": "Contributor 2", "from": "2020-02-13", "to": "2020-02-13"},
+        { "label": "Contributor 2", "from": "2020-03-24", "to": "2020-05-18"},
+        { "label": "Contributor 2", "from": "2020-07-24", "to": "2020-08-11"},
+        { "label": "Contributor 2", "from": "2020-11-03", "to": "2020-11-03"}
+      ]
+    },
+    {
+      "name": "events",
+      "format": {"type":"json", "parse":{"when":"date"}},
+      "values": [
+
+      ]
+    }
+  ],
+
+  "scales": [
+    {
+      "name": "yscale",
+      "type": "point",
+      "paddingOuter":0.5,
+      "range": [0, {"signal": "height"}],
+      "domain": {"data": "contribution", "field": "label"}
+    },
+    {
+      "name": "xscale",
+      "type": "time",
+      "range": "width",
+      "round": true,
+      "domain": {"data": "contribution", "fields": ["from", "to"]}
+    }
+  ],
+
+  "axes": [
+    {"orient": "bottom", "labelAngle": -30, "scale": "xscale", "grid": true ,"format": "%m/%Y"},
+    {"orient": "left", "scale": "yscale", "tickBand":"center", "grid": true,
+//    this one need to be manually adjusted based on number of labels pushed
+      "tickOffset": -18}
+  ],
+
+  "marks": [
+    {
+      "type": "text",
+      "from": {"data": "events"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "when"},
+          "y": {"value": -10},
+          "angle": {"value": -25},
+          "fill": {"value": "#000"},
+          "text": {"field": "name"},
+          "fontSize": {"value": 10}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "events"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "when"},
+          "y": {"value": -8},
+          "width": {"value": 1},
+          // "height": {"field": {"group": "height"}, "offset": 8},
+          "fill": {"value": "#888"}
+        }
+      }
+    },
+    {
+      "type": "text",
+      "from": {"data": "contribution"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "from"},
+          "y": {"scale": "yscale", "field": "label", "offset": -3},
+          "fill": {"value": "#000"},
+          // "text": {"field": "label"},
+          "fontSize": {"value": 10}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "contribution"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "from"},
+          "x2": {"scale": "xscale", "field": "to"},
+          "y": {"scale": "yscale", "field": "label"},
+          "height": {"value": 5},
+          "fill": {"value": "#557"}
+        }
+      }
+    },
+    {
+      "type": "rect",
+      "from": {"data": "contribution"},
+      "encode": {
+        "enter": {
+          "x": {"scale": "xscale", "field": "enter"},
+          "x2": {"scale": "xscale", "field": "leave"},
+          "y": {"scale": "yscale", "field": "label"},
+          "height": {"value": 4},
+          "fill": {"value": "#e44"}
+        }
+      }
+    }
+  ]
+}
