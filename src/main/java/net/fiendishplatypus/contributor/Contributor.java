@@ -61,4 +61,6 @@ public class Contributor {
   public String toString() {
     return "Contributor{" + "id='" + id + '\'' + ", periods=" + periods + '}';
   }
+
+  public record LineFromGitLog(String name, String email, LocalDate dt) {}
 }

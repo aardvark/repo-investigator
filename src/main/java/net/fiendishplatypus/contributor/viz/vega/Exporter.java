@@ -31,6 +31,5 @@ public class Exporter {
     //json allows hanging comma in the object
     //for ease of merging multiple imports we add it this here
     return sj + ",";
-
   }
 }
