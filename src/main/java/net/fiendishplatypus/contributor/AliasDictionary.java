@@ -36,7 +36,7 @@ public class AliasDictionary {
     }
 
 
-    StringJoiner j = new StringJoiner("\n", "Matching contributor '" + name + "' id:\n", "");
+    StringJoiner j = new StringJoiner("\n", "Matching contributor '" + name + "' name:\n", "");
 
     for (Map.Entry<Integer, String> idxToName : matchingIds.entrySet()) {
       int idx = idxToName.getKey();

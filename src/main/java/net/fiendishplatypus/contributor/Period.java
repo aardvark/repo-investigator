@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public record Period(LocalDate from, LocalDate to) {
+
   static List<Period> fromLocalDates(List<LocalDate> dates, int joinSkip) {
     List<LocalDate> dts = dates.stream().sorted().toList();
 
@@ -21,7 +22,7 @@ public record Period(LocalDate from, LocalDate to) {
       }
     }
 
-    if (acc.isEmpty()) acc.add(start);
+    acc.add(start);
     return acc;
   }
 

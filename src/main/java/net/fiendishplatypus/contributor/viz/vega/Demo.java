@@ -21,7 +21,7 @@ public class Demo {
     Map<String, String> aliases = new HashMap<>();
     ContributionPeriodsCalculator calc = new ContributionPeriodsCalculator(32);
     NavigableMap<ContributorId, Contributor> xs = calc.calculate(allLines);
-    Exporter exporter = new Exporter();
+    Exporter exporter = new Exporter(false);
 
 /*
     System.out.println(xs.size());

@@ -2,29 +2,24 @@ package net.fiendishplatypus.contributor;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Set;
 
 public class Contributor {
 
   private final String id;
-  private final int historicalId;
-  private final Set<String> aliases;
   private final List<Period> periods;
 
-  public Contributor(String id, int historicalId, Set<String> aliases, List<Period> contributionPeriods) {
+  public Contributor(String id, List<Period> contributionPeriods) {
     this.id = id;
-    this.historicalId = historicalId;
-    this.aliases = aliases;
     this.periods = contributionPeriods;
   }
 
   static boolean onePeriodOneDayLength(List<Period> xs) {
-    return xs.size() == 1 && xs.getFirst().length() == 1;
+    return xs.size() == 1 && xs.get(0).length() == 1;
   }
 
   public boolean activeOnDate(LocalDate dateOfCheck) {
     //shortcut out of bounds check
-    if (dateOfCheck.isBefore(periods.getFirst().from())) {
+    if (dateOfCheck.isBefore(periods.get(0).from())) {
       return false;
     }
 
@@ -45,21 +40,13 @@ public class Contributor {
     return id;
   }
 
-  public int getHistoricalId() {
-    return historicalId;
-  }
-
-  public Set<String> getAliases() {
-    return aliases;
-  }
-
   public List<Period> getPeriods() {
     return periods;
   }
 
   @Override
   public String toString() {
-    return "Contributor{" + "id='" + id + '\'' + ", periods=" + periods + '}';
+    return "Contributor{" + "name='" + id + '\'' + ", periods=" + periods + '}';
   }
 
   public record LineFromGitLog(String name, String email, LocalDate dt) {}
